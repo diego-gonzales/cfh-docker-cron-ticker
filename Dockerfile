@@ -1,8 +1,10 @@
 # This image contains: alpine, a lightweight linux distro, with node installed. This linux version contains by default an '/app' folder (usually our app is going to be here), so we don't need to create it. Also we can find folders as '/usr', '/lib', etc.
 # --platform flag is used to specify the architecture of the image.By default, docker will use the architecture of our machine, but if we want to use another architecture like linux/arm64, we need to specify it.
 # Instead of specifiying the architecture, we can use the 'buildx' command, which is a CLI plugin for docker, that allows us to build images for multiple architectures at the same time. To use it, we need to install it first: docker buildx install, then we need to create a builder: docker buildx create --name mybuilder, and finally we need to use it: docker buildx use mybuilder. Now we can build images for multiple architectures at the same time: docker buildx build --platform linux/amd64,linux/arm64 -t myimage:latest --push .
-# $BUILDPLATFORM is a variable that contains the architecture of the image that we are building.
-FROM --platform=$BUILDPLATFORM node:19.2-alpine3.16
+# $BUILDPLATFORM is a variable that contains the architecture of the image that we are building. This variable is defined when we build our image with the 'buildx' command.
+# It's not necessary to put --platform=$BUILDPLATFORM
+# FROM --platform=$BUILDPLATFORM node:19.2-alpine3.16
+FROM node:19.2-alpine3.16
 
 # We set the working directory to '/app' folder (it is as we said 'cd /app')
 WORKDIR /app
