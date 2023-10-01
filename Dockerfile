@@ -14,7 +14,10 @@ RUN npm install
 
 # We copy all the files from the actual directory to the '/app' folder (you can use COPY . ./)
 # Doing it this way, the next time we build the image, docker will use the cache of the previous steps, so it will be faster, because package.json doesn't change, then the dependencies doesn't need to install again, instead of doing it this way: COPY . ./ (it will copy all the files and then it will install the dependencies)
-COPY app.js ./
+COPY . .
+
+# Do testing
+RUN npm run test
 
 # We execute the command 'npm start' when the container is running
 # CMD se utiliza para especificar el comando que se ejecutará cuando se inicie un contenedor basado en la imagen.
